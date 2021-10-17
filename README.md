@@ -1,37 +1,51 @@
 
-### Queries SQL (Etapa1)
+### Queries SQL (Test 1)
 
 1. Buscar os nomes de todos os alunos que frequentam alguma turma do professor 'JOAO PEDRO'.
 ```SQL
 SELECT ALUNO.Nome FROM TURMA 
+  JOIN PROFESSOR ON (TURMA.PROFESSOR_id = PROFESSOR.id) 
+  JOIN ALUNO_TURMA ON (TURMA.id = CAST(ALUNO_TURMA.turma_id AS UNSIGNED))
+  JOIN ALUNO ON (ALUNO_TURMA.aluno_id = ALUNO.id) 
 WHERE PROFESSOR.nome LIKE "JOAO PEDRO";
 ```
 2. Buscar os dias da semana que tenham aulas da disciplina 'MATEMATICA'.
 ```SQL
-SELECT DISTINCT TURMA.dia_da_semana FROM TURMA 
+SELECT DISTINCT TURMA.dia_da_semana FROM TURMA
+  JOIN DISCIPLINA ON TURMA.disciplina_id = DISCIPLINA.id
 WHERE DISCIPLINA.nome = 'MATEMATICA';
 ```
 3. Buscar todos os alunos que frequentem aulas de 'MATEMATICA' e também 'FISICA'.
 ```SQL
-SELECT ALUNO.Nome FROM TURMA 
-WHERE DISCIPLINA.nome = 'MATEMATICA' OR DISCIPLINA.nome = 'FISICA';
+SELECT DISTINCT ALUNO.Nome FROM TURMA 
+  JOIN ALUNO_TURMA ON (TURMA.id = ALUNO_TURMA.turma_id) 
+  JOIN ALUNO ON (ALUNO_TURMA.aluno_id = ALUNO.id) 
+  JOIN DISCIPLINA ON (TURMA.id = DISCIPLINA.id)
+WHERE DISCIPLINA.nome = "MATEMATICA" OR DISCIPLINA.nome = "FISICA";
 ```
 4. Buscar as disciplinas que não tenham nenhuma turma.
 ```SQL
 SELECT DISCIPLINA.* FROM DISCIPLINA
+  JOIN TURMA ON DISCIPLINA.id = TURMA.disciplina_id
 WHERE TURMA.disciplina_id IS NULL;
 ```
 5. Buscar os alunos que frequentem aulas de 'MATEMATICA' exceto os que frequentem 'QUIMICA'.
 ```SQL
-SELECT DISTINCT ALUNO.Nome FROM TURMA
-WHERE DISCIPLINA.nome = "MATEMATICA" NOT IN (
-  SELECT DISTINCT ALUNO.Nome FROM TURMA
-  WHERE DISCIPLINA.nome = "QUIMICA");
+SELECT DISTINCT ALUNO.Nome FROM TURMA 
+  JOIN ALUNO_TURMA ON (TURMA.id = ALUNO_TURMA.id) 
+  JOIN ALUNO ON (ALUNO_TURMA.aluno_id = ALUNO.id) 
+  JOIN DISCIPLINA ON (TURMA.id = DISCIPLINA.id) WHERE DISCIPLINA.nome = "MATEMATICA" NOT IN (
+    SELECT DISTINCT ALUNO.Nome FROM TURMA 
+      JOIN ALUNO_TURMA ON (TURMA.id = ALUNO_TURMA.id) 
+      JOIN ALUNO ON (ALUNO_TURMA.aluno_id = ALUNO.id) 
+      JOIN DISCIPLINA ON (TURMA.id = DISCIPLINA.id) WHERE DISCIPLINA.nome = "QUIMICA")
 ```
 
 
 # TODO App
 ## Projeto
+
+Hospedado em: [todo.repl.co](https://TODO.pernalonga.repl.co)
 
 Este projeto foi criado usando [React](https://reactjs.org/) com algumas contribuições de CSS
 

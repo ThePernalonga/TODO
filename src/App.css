@@ -9,8 +9,8 @@
 body {
   background: linear-gradient(
     90deg,
-    rgba(48, 16, 255, 1) 0%,
-    rgba(100, 115, 255, 1) 100%
+    rgb(27, 0, 201) 0%,
+    rgb(193, 35, 255) 100%
   );
 }
 .todo-app {
@@ -90,6 +90,7 @@ h1 {
 }
 
 .todo-row {
+  cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -97,8 +98,8 @@ h1 {
   color: #fff;
   background: linear-gradient(
     90deg,
-    rgba(255, 118, 20, 1) 0%,
-    rgba(255, 84, 17, 1) 100%
+    rgb(20, 255, 32) 0%,
+    rgb(17, 255, 77) 100%
   );
 
   padding: 16px;
